@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<head >
+   
+		<meta charset="utf-8">
+   
+		<title>Lab 04</title>
+   
+		<link rel="stylesheet" href="./css/reset.css" />
+   
+		<link rel="stylesheet" href="./css/Lab04.css" />
+
+	</head>
+	
+<body>
+		
+<header>
+     
+			<h1>Share Your Travels</h1>
+     
+			<p>let us know where you've been</p>
+		
+</header>
+
+		<main>
+   
+			<section>
+				<form method="post" action="http://www.randyconnolly.com/tests/process.php">
+					<legend>
+						<p>PHOTO DETAILS</p>
+					</legend>
+					<fieldset>
+						<table>
+							<tr>
+								<td colspan="2">
+									<p>Title</p>
+									<input type="text" name="title" value="Give your photo a descriptive name"></input>
+									<p>Description</p>
+									<input type="text" name="description" value="Adding a rich description will help with search results"></input>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>Continent</p>
+									<select name="continent">
+										<option>Choose continent</option>
+									</select>
+									<p>Country</p>
+									<select name="country">
+										<option>Choose country</option>
+									</select>
+									<p>City</p>
+									<textarea name="city" value=""></textarea>
+								</td>
+								<td>
+									<p>Copyright?</p>
+									<input type="radio" name="copyright">All rights reserved</input>
+									<input type="radio" name="copyright">Creative Commons</input>
+									<p>Creative Commons Types</p>
+									<input type="checkbox" name="cb1">Attribution</input>
+									<input type="checkbox" name="cb2">Noncommercial</input>
+									<input type="checkbox" name="cb3">No Derivative Works</input>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<p>I accept the software license<input type="checkbox" name="cb4"></input></p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>Rate this photo:</p>
+									<textarea name="rate"></textarea>
+									<p>Color Collection</p>
+									<input type="color" name="color"></input>
+								</td>
+								<td>
+									<p>Date Taken:</p>
+									<input type="date" name="date"></input>
+									<p>Time Taken</p>
+									<input type="time" name="time"></input>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input type="submit" value="submit"></input>
+									<input type="reset" value="Clear Form"></input>
+								</td>
+							</tr>
+						</table>
+					</fieldset>
+				</form>
+   
+   
+			</section>
+
+		</main>  
+	
+
+
+</body>
+
+</html>
