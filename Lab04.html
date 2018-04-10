@@ -32,6 +32,7 @@
 					</legend>
 					<fieldset>
 						<table>
+							<tbody>
 							<tr>
 								<td colspan="2">
 									<p>Title</p>
@@ -54,13 +55,20 @@
 									<textarea name="city" value=""></textarea>
 								</td>
 								<td>
-									<p>Copyright?</p>
-									<input type="radio" name="copyright">All rights reserved</input>
-									<input type="radio" name="copyright">Creative Commons</input>
-									<p>Creative Commons Types</p>
-									<input type="checkbox" name="cb1">Attribution</input>
-									<input type="checkbox" name="cb2">Noncommercial</input>
-									<input type="checkbox" name="cb3">No Derivative Works</input>
+									<div class="box">
+										<p>Copyright?</p>
+										<input type="radio" name="copyright">All rights reserved</input>
+										<br/>
+										<input type="radio" name="copyright">Creative Commons</input>
+									</div>
+									<div class="box">
+										<p>Creative Commons Types</p>
+										<input type="checkbox" name="cb1">Attribution</input>
+										<br/>
+										<input type="checkbox" name="cb2">Noncommercial</input>
+										<br/>
+										<input type="checkbox" name="cb3">No Derivative Works</input>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -76,10 +84,12 @@
 									<input type="color" name="color"></input>
 								</td>
 								<td>
+									<div class="box">
 									<p>Date Taken:</p>
 									<input type="date" name="date"></input>
 									<p>Time Taken</p>
 									<input type="time" name="time"></input>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -88,6 +98,7 @@
 									<input type="reset" value="Clear Form"></input>
 								</td>
 							</tr>
+							</tbody>
 						</table>
 					</fieldset>
 				</form>
