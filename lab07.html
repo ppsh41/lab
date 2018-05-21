@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body{text-align: center;}
+
+        
+			select,button{
+width: 300px;}
+
+        
+			table{margin:0 auto}
+
+   
+			tr.head1{
+background-color: grey;color: whitesmoke;
+}
+
+        
+			tr.odd{
+background-color: lightgrey;
+}
+
+        
+			td{
+padding: 0 0.5em;}
+
+		</style>
+	</head>
+	<body>
+		<select id="select1">
+			<option>SELECT ONE</option>
+			<option>CREATE TABLE</option>
+			<option>ADD ROW</option>
+			<option>DELETE ROW</option>
+			<option>DELETE TABLE</option>
+		</select>
+		<p id="input" hidden="hidden"></p>
+		<button hidden="hidden" id="commit" type="button">commit</button>
+		<select id="select2">
+			<option class="option2">SELECT(default:last created)</option>
+		</select>
+		<table  id="table1">
+		</table>
+	</body>
+	<script>
+		var table=[];
+		var temp=[];
+		var temp2=[];
+		var selectedTable=0;
+		var k=0;
+		var j=0;
+		var m=0;
+		function showTable(){
+			document.getElementById("table1").innerHTML="";
+			if (selectedTable==0) 	return;
+			else{
+				for(j=0;j<table[selectedTable-1][0].length;++j)  {
+					var newRow = document.getElementById("table1").insertRow(j);
+					for(m=0;m<table[selectedTable-1].length;++m) newRow.insertCell(m).innerText=table[selectedTable-1][m][j];
+				}
+				for(j=0;j<table[selectedTable-1][0].length;++j)  {
+					if (j==0) {
+						document.getElementsByTagName("tr")[j].style.
+backgroundColor="grey";
+						document.getElementsByTagName("tr")[j].style.color="whitesmoke";
+						continue;
+					}
+					if (j % 2==0) {
+						document.getElementsByTagName("tr")[j].style.
+backgroundColor="lightgrey";
+					}
+				}
+			}
+			document.getElementsByClassName("option2")[selectedTable].selected="selected";
+		}
+		function deleteElement(a,b){
+			for(j=b;j<a.length;++j){
+				a[j]=a[j+1];
+			}
+			--a.length;
+		}
+		document.getElementById("select2").onchange=function(){
+			selectedTable=document.getElementById("select2").selectedIndex;
+			showTable();
+		}
+		document.getElementById("select1").onchange=function(){
+			switch(document.getElementById("select1").options[document.getElementById("select1").selectedIndex].value){
+				case "SELECT ONE":
+					document.getElementById("input").hidden="hidden";
+					document.getElementById("commit").hidden="hidden";
+					break;
+				case "CREATE TABLE":
+					document.getElementById("input").hidden="";
+					document.getElementById("input").innerHTML="<input type=\"text\" id=\"tableName\" placeholder=\"Table Name\"></input><input type=\"number\" id=\"columnsNumbers\" placeholder=\"Columns Numbers\">";
+					document.getElementById("columnsNumbers").onchange=function(){
+						var isNumber=true;
+						for (k=0;k<document.getElementById("columnsNumbers").value.length;++k) {
+							if ("0">document.getElementById("columnsNumbers").value[k] || document.getElementById("columnsNumbers").value[k]>"9") isNumber=false;
+						}
+						if (!isNumber || document.getElementById("columnsNumbers").value<=0) {
+							//document.getElementById("input").innerHTML="<input type=\"text\" id=\"tableName\" placeholder=\"Table Name\"></input><input type=\"number\" id=\"columnsNumbers\" placeholder=\"Columns Numbers\">";
+							return;
+						}
+						var tempTableName="";
+						var tempColumnsNumber=0;
+						var i=0;
+						tempTableName=document.getElementById("tableName").value;
+						tempColumnsNumbers=document.getElementById("columnsNumbers").value;
+						document.getElementById("input").innerHTML+="<br/>";
+						document.getElementById("commit").hidden="";
+						for(i=1;i<=tempColumnsNumbers;++i){
+							document.getElementById("input").innerHTML+="<input type=\"text\" placeholder=\"Attribute\" class=\"attribute\"></input>";
+						}
+						document.getElementById("tableName").value=tempTableName;
+						document.getElementById("columnsNumbers").value=tempColumnsNumbers;
+						document.getElementById("commit").onclick=function(){
+							for(i=0;i<document.getElementById("columnsNumbers").value;++i) if (document.getElementsByClassName("attribute")[i]=="") return;
+							for (i=0;i<document.getElementById("columnsNumbers").value;++i) {
+								temp[i]=[0];
+								temp[i][0]=document.getElementsByClassName("attribute")[i].value;
+							}
+							table[table.length]=temp;
+							selectedTable=table.length;
+							document.getElementById("select2").innerHTML+="<option class=\"option2\">"+document.getElementById("tableName").value+"</option>";
+							showTable();
+						};
+					};
+					break;
+				case "ADD ROW":
+					document.getElementById("input").hidden="";
+					document.getElementById("input").innerHTML="";
+					for(i=0;i<table[selectedTable-1].length;++i){
+						document.getElementById("input").innerHTML+="<input type=\"text\" placeholder=\""+table[selectedTable-1][i][0]+"\" class=\"attribute\"></input>";
+					}
+					document.getElementById("commit").hidden="";
+					document.getElementById("commit").onclick=function(){
+						for (i=0;i<table[selectedTable-1].length;++i) {
+							table[selectedTable-1][i][table[selectedTable-1][i].length]=document.getElementsByClassName("attribute")[i].value;
+						}
+						showTable();
+					};
+					break;
+				case "DELETE ROW":
+					document.getElementById("input").hidden="";
+					document.getElementById("input").innerHTML="";
+					for(i=0;i<table[selectedTable-1].length;++i){
+						document.getElementById("input").innerHTML+="<input type=\"text\" placeholder=\""+table[selectedTable-1][i][0]+"\" class=\"attribute\"></input>";
+					}
+					document.getElementById("commit").hidden="";
+					document.getElementById("commit").onclick=function(){
+						if (table[selectedTable-1][0].length==1) return;
+						for (j=1;j<table[selectedTable-1][0].length;++j) {
+							var temp3=true;
+							for(i=0;i<table[selectedTable-1].length;++i) {
+								if(document.getElementsByClassName("attribute")[i].value==null || document.getElementsByClassName("attribute")[i].value=="") continue;
+								if (table[selectedTable-1][i][j]!=document.getElementsByClassName("attribute")[i].value) temp3=false;
+							}
+							if (temp3) {
+								for(i=0;i<table[selectedTable-1].length;++i) {
+									deleteElement(table[selectedTable-1][i],j);
+								}
+								break;
+							}
+						}
+						showTable();
+					};
+					break;
+				case "DELETE TABLE":
+					document.getElementById("input").hidden="";
+					document.getElementById("input").innerHTML="WARNING: You cannot undo this action!";
+					document.getElementById("commit").hidden="";
+					document.getElementById("commit").onclick=function(){
+						if (selectedTable==0) return;
+						deleteElement(table,selectedTable-1);
+						if (table.length>=1) selectedTable=1;
+						else selectedTable=0;
+						showTable();
+					};										
+			}
+		}
+	
+	</script>
+</html>
